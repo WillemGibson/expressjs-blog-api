@@ -4,7 +4,8 @@
   "description": "This API will be a really, really barebones blog API. By \"blog\", we mean \"users can write content and that content is viewable to other users\" -- like a social network or journal or blog.",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'Error: no test specified'; false"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "NODE_ENV=development nodemon src/index.js"
   },
   "repository": {
     "type": "git",
