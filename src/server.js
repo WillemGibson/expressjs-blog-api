@@ -90,7 +90,11 @@ app.get("/databaseHealth", (request, response) => {
     })
 });
 
-//
+// Endpoint to retrieve a dump of all MongoDB collections and their data.
+// Retrieves names of all collections, fetches all documents from each collection,
+// and returns a structured dumpContainer object containing all collection data.
+// Logs the dumped data to the server terminal with formatted JSON before sending
+// it as a JSON response to the client.
 app.get("/databaseDump", async (request, response) => {
     // Set up an object to store our data.
     const dumpContainer = {};
