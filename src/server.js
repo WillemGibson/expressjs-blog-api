@@ -44,7 +44,51 @@ app.get('/', (request, response) => {
     });
 });
 
+// Establishes a connection to a MongoDB database based on environment,
+// logs connection status, and provides endpoint "/databaseHealth" to
+// retrieve current database connection details using Mongoose.
+const mongoose = require('mongoose');
+var databaseURL = "";
+switch (process.env.NODE_ENV.toLowerCase()) {
+    case "test":
+        databaseURL = "mongodb://localhost:27017/ExpressBuildAnAPI-test";
+        break;
+    case "development":
+        databaseURL = "mongodb://localhost:27017/ExpressBuildAnAPI-dev";
+        break;
+    case "production":
+        databaseURL = process.env.DATABASE_URL;
+        break;
+    default:
+        console.error("Incorrect JS environment specified, database will not be connected.");
+        break;
+}
+const {databaseConnector} = require('./database');
+databaseConnector(databaseURL).then(() => {
+    console.log("Database connected successfully!");
+}).catch(error => {
+    console.log(`
+    Some error occured connecting to the database! To was:
+    ${error} 
+    `);
+});
 
+// Return a bunch of useful details from the database connection
+// Dig into each property here:
+// https://mongoosejs.com/docs/api/connection.html
+app.get("/databaseHealth", (request, response) => {
+    let databaseState = mongoose.connection.readyState;
+    let databaseName = mongoose.connection.name;
+    let databaseModels = mongoose.connection.modelNames();
+    let databaseHost = mongoose.connection.host;
+
+    response.json({
+        readyState: databaseState,
+        dbName: databaseName,
+        dbModels: databaseModels,
+        dbHost: databaseHost
+    })
+});
 
 // Keep this route at the end of this file, only before the module.exports!
 // A 404 route should only trigger if no preceding routes or middleware was run.
