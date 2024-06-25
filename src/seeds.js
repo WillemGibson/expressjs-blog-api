@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { databaseConnector } = require('./database');
+const { hashString } = require('./controllers/UserFunctions');
 
 // Import the models that we'll seed, so that
 // we can do things like Role.insertMany()
@@ -28,14 +29,41 @@ const roles = [
     }
 ]
 
-// to fill in after creating user data encrption funcitonality.
+// To fill in after creating user data encryption functionality.
 const users = [
-
+    {
+        username: "seedUser1",
+        email:"seed1@email.com",
+        password: null,
+        country:"Australia",
+        role: null
+    },
+    {
+        username: "seedUser2",
+        email:"seed2@email.com",
+        password: null,
+        country:"TheBestOne",
+        role: null
+    }
 ];
 
-// To fill in after creating users successfully/
-const post = [
-
+// To fill in after creating users successfully.
+const posts = [
+    {
+        title: "Some seeded post",
+        description: "Very cool. Best post. Huge post. No other posts like it!",
+        author: null
+    },
+    {
+        title: "Some other seeded post",
+        description: "Very cool. Best post. Huge post. One other post like it!",
+        author: null
+    },
+    {
+        title: "Another seeded post",
+        description: "Very cool. Best post. Huge post. Two other posts like it!",
+        author: null
+    }
 ];
 
 // Connect to database.
