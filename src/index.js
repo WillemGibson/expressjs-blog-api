@@ -1,8 +1,8 @@
 // Import the configured items from the server file:
-var { app, HOST, PORT } = require('./server');
+var { app, PORT } = require('./server');
 
-// Rung the server
-app.listen(PORT, HOST, () => {
+// Run the server
+app.listen(PORT, () => {
     console.log(`
     Express Blog API is now Running!
     
