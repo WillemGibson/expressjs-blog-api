@@ -2,7 +2,7 @@
 // create functionality involving them.
 const { User } = require('../models/UserModel');
 
-const donenv = require('dotenv');
+const dotenv = require('dotenv');
 dotenv.config();
 
 // --------------------------------------
