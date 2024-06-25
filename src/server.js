@@ -119,6 +119,11 @@ app.get("/databaseDump", async (request, response) => {
     });
 });
 
+// Mounts the rolesController middleware at the /roles endpoint.
+// Incoming requests to /roles will be handled by the routes defined in the rolesController.
+const rolesController = require("./controllers/RolesRoutes");
+app.use("/roles", rolesController);
+
 // Keep this route at the end of this file, only before the module.exports!
 // A 404 route should only trigger if no preceding routes or middleware was run.
 // So, put this below where any other routes are placed within this file.
