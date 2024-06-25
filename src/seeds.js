@@ -116,4 +116,33 @@ databaseConnector(databaseURL).then(() => {
     // Disconnect from the database.
     mongoose.connection.close();
     console.log("DB seed connection closed.")
+}).then(async () => {
+    // Add new data into the database.
+    // Store the new documents as a variable for use later.
+    let rolesCreated = await Role.insertMany(roles);
+
+    // Iterate through the users array, using for-of to enable async/await.
+    for (const user of users) {
+        // Set the password of the user.
+        user.password = await hashString("SomeRandomPassword1");
+        // Pick a random role from the roles created and set that for the user.
+        user.role = rolesCreated[Math.floor(Math.random() * rolesCreated.length)].id;
+    }
+    // Save the users to the database.
+    let usersCreated = await User.insertMany(users);
+
+    // Same again for posts;
+    // pick a random user and assign that user as the author of a post.
+    for (const post of posts) {
+        post.author = usersCreated[Math.floor(Math.random() * usersCreated.length)].id;
+    }
+    // Then save the posts to the database.
+    let postsCreated = await Post.insertMany(posts);
+
+    // Log modified to list all data created.
+    console.log("New DB data created.\n" + JSON.stringify({roles: rolesCreated, users: usersCreated, posts: postsCreated}, null, 4));
+}).then(() => {
+    // Disconnect from the database.
+    mongoose.connection.close();
+    console.log("DB seed connection closed.")
 });
